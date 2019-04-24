@@ -1,10 +1,8 @@
 'use strict';
 
-import chai = require('chai');
+import { expect } from 'chai';
 import {dataMember, deserialize} from '../index';
 import {dataMemberListMetadataKey, dataMemberMetadataKey} from '../src/dataMemberDecorator';
-
-var expect = chai.expect;
 
 describe('@dataMember()', () => {
     it(`creates '${dataMemberListMetadataKey}' metadata with all properties listed`, () => {
@@ -17,7 +15,7 @@ describe('@dataMember()', () => {
 
             @dataMember()
             public gaz: number;
-        };
+        }
 
         var metadata = Reflect.getMetadata(dataMemberListMetadataKey, A.prototype);
 
@@ -28,7 +26,7 @@ describe('@dataMember()', () => {
         class A {
             @dataMember()
             public foo: string;
-        };
+        }
 
         var metadata = Reflect.getMetadata(dataMemberMetadataKey, A.prototype, "foo");
         expect(metadata).to.be.equal("foo");
@@ -41,7 +39,7 @@ describe(`@dataMember({fieldName: 'fieldName'})`, () => {
         class A {
             @dataMember({ fieldName: 'bar' })
             public foo: string;
-        };
+        }
 
         var metadata = Reflect.getMetadata(dataMemberMetadataKey, A.prototype, "foo");
         expect(metadata).to.be.equal("bar");

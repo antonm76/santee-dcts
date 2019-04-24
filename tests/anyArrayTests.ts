@@ -1,9 +1,8 @@
 'use strict';
 
-import chai = require('chai');
+import { expect } from 'chai';
+import 'mocha';
 import {deserialize, dataMember, anyArray} from '../index';
-
-var expect = chai.expect;
 
 describe("@anyArray()", () => {
     it("deserializes arrays by deep clonning it", () => {
@@ -15,7 +14,7 @@ describe("@anyArray()", () => {
             @dataMember()
             @anyArray()
             public numbersArray: number[];
-        };
+        }
 
         var source = { objArray: ["aa", {}, 30], numbersArray: [20, 30, 40] };
         var result = deserialize(source, A);

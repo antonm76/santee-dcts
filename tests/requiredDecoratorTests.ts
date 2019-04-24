@@ -1,10 +1,8 @@
 'use strict';
 
-import chai = require('chai');
+import { expect } from 'chai';
 import {required, deserialize, dataMember} from '../index';
 import {requiredMetadataKey} from '../src/requiredDecorator';
-
-var expect = chai.expect;
 
 describe("@required()", () => {
     it(`creates '${requiredMetadataKey}' metadata ` +
@@ -15,7 +13,7 @@ describe("@required()", () => {
             class A {
                 @required()
                 public foo: string;
-            };
+            }
 
             var metadata = Reflect.getMetadata(requiredMetadataKey, A.prototype, "foo");
 
@@ -49,9 +47,9 @@ describe("@required()", () => {
             @required()
             public foo: string;
         }
-        
+
         var source = { bar: "test" };
-        
+
         expect(() => deserialize(source, A)).to.throw(Error);
     });
 
@@ -62,9 +60,9 @@ describe("@required()", () => {
             @required()
             public foo: string;
         }
-        
+
         var source = { foo: <any>null };
-        
+
         expect(() => deserialize(source, A)).to.throw(Error);
     });
 });
@@ -76,9 +74,9 @@ describe("@required({nullable: true})", () => {
             @required({nullable: true})
             public foo: string;
         }
-        
+
         var source = { bar: "test" };
-        
+
         expect(() => deserialize(source, A)).to.throw(Error);
     });
 
@@ -89,9 +87,9 @@ describe("@required({nullable: true})", () => {
             @required({nullable: true})
             public foo: string;
         }
-        
+
         var source = { foo: <any>null };
-        
+
         var result = deserialize(source, A);
         expect(result.foo).to.be.null;
     });
@@ -113,5 +111,19 @@ describe("@required({nullable: true})", () => {
 
         var result = deserialize(source, A);
         expect(result.foo).to.be.null;
+    });
+
+    type Nullable<T> = T | null;
+    it("deserializes 'nullable' fields", () => {
+        class A {
+            @dataMember()
+            @required({nullable: true})
+            public obj: string | null;
+        }
+
+        var source = { obj: 'string value' };
+        var result = deserialize(source, A);
+
+        expect(result.obj).to.equal('string value');
     });
 });

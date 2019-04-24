@@ -1,9 +1,7 @@
 'use strict';
 
-import chai = require('chai');
+import { expect } from 'chai';
 import {deserialize, dataMember, deserializeArray, anyArray} from '../index';
-
-var expect = chai.expect;
 
 describe("deserialize(obj, constructorFunction)", () => {
     it("throws exception if object passed is not an object", () => {
@@ -35,7 +33,7 @@ describe("deserialize(obj, constructorFunction)", () => {
 
             @dataMember()
             public falseValue: boolean;
-        };
+        }
 
         var source = { foo: "test", bar: 5, goo: true, falseValue: false };
 
@@ -51,7 +49,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public foo: string;
-        };
+        }
 
         var source = { foo: 5 };
 
@@ -66,7 +64,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public foo: B;
-        };
+        }
 
         var source = { foo: 5 };
 
@@ -77,7 +75,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public foo: string;
-        };
+        }
 
         var source = { bar: 5 };
 
@@ -88,7 +86,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public foo: string;
-        };
+        }
 
         var source = { foo: <any>null };
 
@@ -100,7 +98,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public obj: any;
-        };
+        }
 
         var source = { obj: { val: "value" } };
         var result = deserialize(source, A);
@@ -113,7 +111,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public obj: any;
-        };
+        }
 
         var source = { obj: 5 };
         var result = deserialize(source, A);
@@ -125,7 +123,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public obj: Object;
-        };
+        }
 
         var source = { obj: { val: "value" } };
         var result = deserialize(source, A);
@@ -146,7 +144,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public obj: B;
-        };
+        }
 
         var source = { obj: { foo: "a", boo: 10 } };
         var result = deserialize(source, A);
@@ -169,7 +167,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public obj: B;
-        };
+        }
 
         var source = { obj: { foo: "a", boo: 10 } };
         var result = deserialize(source, A);
@@ -186,7 +184,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public obj: IObj;
-        };
+        }
 
         var source = { obj: { val: "value" } };
         var result = deserialize(source, A);
@@ -199,7 +197,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public objArray: any[];
-        };
+        }
 
         var source = { objArray: ["aa", {}, 30]};
         expect(() => deserialize(source, A)).to.throw();
@@ -209,7 +207,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public objArray: any[];
-        };
+        }
 
         var source = { objArray: { foo: "bar" } };
         expect(() => deserialize(source, A)).to.throw(Error);
@@ -219,7 +217,7 @@ describe("deserialize(obj, constructorFunction)", () => {
         class A {
             @dataMember()
             public objArray: any[];
-        };
+        }
 
         var source = { objArray: 5 };
         expect(() => deserialize(source, A)).to.throw(Error);
@@ -232,7 +230,7 @@ describe("deserialize(obj, MyClass)", () => {
         class A {
             @dataMember()
             public bar: string;
-        };
+        }
 
         var obj = { bar: "space bar" };
 
@@ -248,7 +246,7 @@ describe("deserializeArray(objArray, MyClass)", () => {
         class A {
             @dataMember()
             public bar: string;
-        };
+        }
 
         var array = [{ bar: "space bar" }, { bar: "xxxx" }];
 
@@ -265,7 +263,7 @@ describe("deserializeArray(objArray, MyClass)", () => {
         class A {
             @dataMember()
             public bar: string;
-        };
+        }
 
         expect(() => deserializeArray(<any>{}, A)).to.throw(Error);
     });
@@ -286,7 +284,7 @@ describe("deserialize(obj, MyClass) with no design-time metadata", () => {
 
             @dataMember()
             public falseValue: boolean;
-        };
+        }
 
         Reflect.deleteMetadata("design:type", A.prototype, "foo");
         Reflect.deleteMetadata("design:type", A.prototype, "bar");

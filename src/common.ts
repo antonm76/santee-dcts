@@ -7,8 +7,8 @@ export function isPrimitiveTypeConstructor(targetType: any) {
         && targetType !== String
         && targetType !== Boolean
         && targetType !== Array);
-};
+}
 
 export interface Constraint {
     check(sourceValue: any): void;
-} 
+}
